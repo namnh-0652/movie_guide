@@ -1,0 +1,1 @@
+const String APP_NAME_FOR_DISPLAYING = "THE \nMOVIE GUIDE";
