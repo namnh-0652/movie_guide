@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movieguide/shared/constant.dart';
+
+import 'views/views.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.title}) : super(key: key);
@@ -10,36 +13,50 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  int _currentIndex = 0;
+  final tabs = [
+    TabPopular(),
+    TabRated(),
+    TabNewest(),
+    TabFavorite(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+        child: tabs[_currentIndex],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (idx) {
+          if (_currentIndex == idx) return;
+          setState(() {
+            _currentIndex = idx;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            title: Text(TAB_POPULAR),
+            icon: Icon(Icons.home),
+            backgroundColor: Colors.redAccent,
+          ),
+          BottomNavigationBarItem(
+            title: Text(TAB_RATED),
+            icon: Icon(Icons.thumb_up),
+            backgroundColor: Colors.blueAccent,
+          ),
+          BottomNavigationBarItem(
+            title: Text(TAB_NEWEST),
+            icon: Icon(Icons.fiber_new),
+            backgroundColor: Colors.orangeAccent,
+          ),
+          BottomNavigationBarItem(
+            title: Text(TAB_FAVORITE),
+            icon: Icon(Icons.favorite),
+            backgroundColor: Colors.purpleAccent,
+          ),
+        ],
       ),
     );
   }
