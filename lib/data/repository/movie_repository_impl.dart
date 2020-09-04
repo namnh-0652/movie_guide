@@ -22,12 +22,13 @@ class MovieRepositoryImpl extends MovieRepository {
   });
 
   @override
-  Future<Either<Failure, List<Movie>>> popularMovies() async {
+  Future<Either<Failure, Tuple2<List<Movie>, int>>> popularMovies(
+      String apiKey, int page) async {
     bool isNetworkConnected = await networkInfo.isConnected;
     if (!isNetworkConnected) {
       return Left(NetworkFailure());
     }
-    final data = await remoteDataSource.popularMovies();
-    return Right(dataMapper.collectionMap(data));
+    final data = await remoteDataSource.popularMovies(apiKey, page);
+    return Right(Tuple2(dataMapper.collectionMap(data.value1), data.value2));
   }
 }

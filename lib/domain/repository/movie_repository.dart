@@ -3,5 +3,6 @@ import 'package:movieguide/domain/entities/movie.dart';
 import 'package:movieguide/domain/error/failure.dart';
 
 abstract class MovieRepository {
-  Future<Either<Failure, List<Movie>>> popularMovies();
+  Future<Either<Failure, Tuple2<List<Movie>, int>>> popularMovies(
+      String apiKey, int page);
 }
