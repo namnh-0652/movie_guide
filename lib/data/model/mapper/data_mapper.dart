@@ -8,6 +8,6 @@ class DataMapper {
 
   Iterable<R> collectionMap<R extends Entity>(
       Iterable<MapAbleData<R>> collectionData) {
-    return collectionData.map((e) => map(e));
+    return collectionData.map((e) => map(e)).toList();
   }
 }

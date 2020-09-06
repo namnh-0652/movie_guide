@@ -23,40 +23,45 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: tabs[_currentIndex],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (idx) {
-          if (_currentIndex == idx) return;
-          setState(() {
-            _currentIndex = idx;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            title: Text(TAB_POPULAR),
-            icon: Icon(Icons.home),
-            backgroundColor: Colors.redAccent,
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: IndexedStack(
+            children: tabs,
+            index: _currentIndex,
           ),
-          BottomNavigationBarItem(
-            title: Text(TAB_RATED),
-            icon: Icon(Icons.thumb_up),
-            backgroundColor: Colors.blueAccent,
-          ),
-          BottomNavigationBarItem(
-            title: Text(TAB_NEWEST),
-            icon: Icon(Icons.fiber_new),
-            backgroundColor: Colors.orangeAccent,
-          ),
-          BottomNavigationBarItem(
-            title: Text(TAB_FAVORITE),
-            icon: Icon(Icons.favorite),
-            backgroundColor: Colors.purpleAccent,
-          ),
-        ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (idx) {
+            if (_currentIndex == idx) return;
+            setState(() {
+              _currentIndex = idx;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+              title: Text(TAB_POPULAR),
+              icon: Icon(Icons.home),
+              backgroundColor: Colors.redAccent,
+            ),
+            BottomNavigationBarItem(
+              title: Text(TAB_RATED),
+              icon: Icon(Icons.thumb_up),
+              backgroundColor: Colors.blueAccent,
+            ),
+            BottomNavigationBarItem(
+              title: Text(TAB_NEWEST),
+              icon: Icon(Icons.fiber_new),
+              backgroundColor: Colors.orangeAccent,
+            ),
+            BottomNavigationBarItem(
+              title: Text(TAB_FAVORITE),
+              icon: Icon(Icons.favorite),
+              backgroundColor: Colors.purpleAccent,
+            ),
+          ],
+        ),
       ),
     );
   }

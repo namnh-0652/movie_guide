@@ -13,4 +13,12 @@ abstract class MovieApi {
   @GET("/movie/popular")
   Future<PagedResponse<MovieData>> popularMovies(
       @Query("api_key") String apiKey, @Query("page") int page);
+
+  @GET("/movie/top_rated")
+  Future<PagedResponse<MovieData>> ratedMovies(
+      @Query("api_key") String apiKey, @Query("page") int page);
+
+  @GET("/movie/upcoming")
+  Future<PagedResponse<MovieData>> latestMovies(
+      @Query("api_key") String apiKey, @Query("page") int page);
 }

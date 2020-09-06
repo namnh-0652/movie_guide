@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:movieguide/presentation/router.dart';
 
-void main() {
+import 'di.dart';
+
+void main() async {
+  await setup();
   runApp(MyApp());
 }
 
