@@ -10,10 +10,10 @@ class ServiceGenerator {
       ..baseUrl = baseUrl
       ..connectTimeout = CONNECT_TIMEOUT
       ..receiveTimeout = RECEIVE_TIMEOUT;
-
-    dio.interceptors
-      ..addAll(inteceptors)
-      ..add(LogInterceptor());
+    if (inteceptors != null) {
+      dio.interceptors..addAll(inteceptors);
+    }
+    dio.interceptors..add(LogInterceptor());
     return dio;
   }
 }

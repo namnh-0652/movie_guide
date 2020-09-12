@@ -23,7 +23,7 @@ class PagedResponse<T> extends Equatable {
     this.results,
   });
 
-  int get nextPage => page + 1 >= totalPages ? null : page + 1;
+  int get nextPage => page == totalPages ? null : page + 1;
 
   Map<String, dynamic> toJson() => _$PagedResponseToJson(this);
 
