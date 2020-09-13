@@ -1,13 +1,7 @@
-import 'package:movieguide/data/model/mapable_data.dart';
+import 'package:movieguide/data/model/data_model.dart';
 import 'package:movieguide/domain/entities/base_entity.dart';
 
-class DataMapper {
-  R map<R extends Entity>(MapAbleData<R> data) {
-    return data.map();
-  }
-
-  Iterable<R> collectionMap<R extends Entity>(
-      Iterable<MapAbleData<R>> collectionData) {
-    return collectionData.map((e) => map(e)).toList();
-  }
+abstract class DataMapper<D extends DataModel, E extends Entity> {
+  D mapToData(E entity);
+  E mapToDomain(D data);
 }

@@ -6,7 +6,7 @@ import 'package:movieguide/data/repository/remote/api/api_config.dart';
 import 'package:movieguide/di.dart';
 import 'package:movieguide/domain/entities/movie.dart';
 import 'package:movieguide/domain/entities/movie_kind.dart';
-import 'package:movieguide/presentation/home/bloc/movielist_bloc.dart';
+import 'package:movieguide/presentation/home/bloc/movielist/movielist_bloc.dart';
 
 class TabNewest extends StatelessWidget {
   const TabNewest({Key key}) : super(key: key);

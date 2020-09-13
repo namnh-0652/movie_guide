@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:movieguide/presentation/router.dart';
 
+import 'data/repository/local/api/db/app_database.dart';
 import 'di.dart';
 
 void main() async {
-  await setup();
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupDi();
+  await getIt.get<AppDatabase>().init();
   runApp(MyApp());
 }
 
