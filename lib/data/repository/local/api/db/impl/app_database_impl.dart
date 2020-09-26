@@ -12,8 +12,8 @@ class AppDataBaseImpl implements AppDatabase {
   static final AppDataBaseImpl instance = AppDataBaseImpl._();
 
   AppDataBaseImpl._();
-  Database _database;
-  MovieDao _movieDao;
+  Database? _database;
+  MovieDao? _movieDao;
 
   @override
   Future<void> init() async {
@@ -38,8 +38,8 @@ class AppDataBaseImpl implements AppDatabase {
   @override
   MovieDao movieDao() {
     assert(_database != null, "must init database first!");
-    _movieDao ??= MovieDao(database: _database);
-    return _movieDao;
+    _movieDao ??= MovieDao(database: _database!);
+    return _movieDao!;
   }
 
   Future _onCreate(Database db, int version) async {
@@ -64,7 +64,7 @@ class AppDataBaseImpl implements AppDatabase {
   }
 
   Future<void> close() async {
-    await _database.close();
+    await _database?.close();
   }
 
   /// This is array of create queries table

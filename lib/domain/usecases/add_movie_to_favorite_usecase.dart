@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:movieguide/domain/entities/movie.dart';
 import 'package:movieguide/domain/error/failure.dart';
 import 'package:movieguide/domain/repository/movie_repository.dart';
@@ -10,7 +9,7 @@ class AddMovieToFavoriteUseCase
     extends BaseUseCase<bool, AddMovieToFavoriteParams> {
   final MovieRepository repository;
 
-  AddMovieToFavoriteUseCase({@required this.repository});
+  AddMovieToFavoriteUseCase({required this.repository});
 
   @override
   Future<Either<Failure, bool>> call(AddMovieToFavoriteParams params) {
@@ -21,7 +20,7 @@ class AddMovieToFavoriteUseCase
 class AddMovieToFavoriteParams extends Equatable {
   final Movie movie;
 
-  AddMovieToFavoriteParams({@required this.movie});
+  AddMovieToFavoriteParams({required this.movie});
   @override
   List<Object> get props => [movie];
 }

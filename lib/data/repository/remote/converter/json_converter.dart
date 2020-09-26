@@ -21,6 +21,6 @@ class DataConverter<T> implements JsonConverter<T, Object> {
 
   @override
   Object toJson(T object) {
-    return object;
+    return object as Object;
   }
 }

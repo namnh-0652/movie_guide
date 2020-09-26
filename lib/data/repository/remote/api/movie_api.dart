@@ -1,4 +1,5 @@
 import 'package:movieguide/data/model/movie_data.dart';
+import 'package:movieguide/data/model/movie_detail_data.dart';
 import 'package:movieguide/data/repository/remote/api/api_config.dart';
 import 'package:movieguide/data/repository/remote/response/paged_response.dart';
 
@@ -21,4 +22,8 @@ abstract class MovieApi {
   @GET("/movie/upcoming")
   Future<PagedResponse<MovieData>> latestMovies(
       @Query("api_key") String apiKey, @Query("page") int page);
+
+  @GET("/movie/{movie_id}")
+  Future<MovieDetailData> getMovieDetail(
+      @Query("api_key") String apiKey, @Path("movie_id") int movieId);
 }

@@ -4,9 +4,9 @@ import 'package:movieguide/shared/constant.dart';
 import 'views/views.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key, this.title}) : super(key: key);
+  HomeScreen({Key? key, this.title}) : super(key: key);
 
-  final String title;
+  final String? title;
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -39,22 +39,22 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           items: [
             BottomNavigationBarItem(
-              title: Text(TAB_POPULAR),
+              label: TAB_POPULAR,
               icon: Icon(Icons.home),
               backgroundColor: Colors.redAccent,
             ),
             BottomNavigationBarItem(
-              title: Text(TAB_RATED),
+              label: TAB_RATED,
               icon: Icon(Icons.thumb_up),
               backgroundColor: Colors.blueAccent,
             ),
             BottomNavigationBarItem(
-              title: Text(TAB_NEWEST),
+              label: TAB_NEWEST,
               icon: Icon(Icons.fiber_new),
               backgroundColor: Colors.orangeAccent,
             ),
             BottomNavigationBarItem(
-              title: Text(TAB_FAVORITE),
+              label: TAB_FAVORITE,
               icon: Icon(Icons.favorite),
               backgroundColor: Colors.purpleAccent,
             ),

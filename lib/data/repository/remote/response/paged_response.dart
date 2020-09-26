@@ -7,14 +7,14 @@ part 'paged_response.g.dart';
 @JsonSerializable()
 class PagedResponse<T> extends Equatable {
   @JsonKey(name: 'page')
-  final int page;
+  final int? page;
   @JsonKey(name: 'total_results')
-  final int totalResults;
+  final int? totalResults;
   @JsonKey(name: 'total_pages')
-  final int totalPages;
+  final int? totalPages;
   @JsonKey(name: 'results')
   @DataConverter()
-  final List<T> results;
+  final List<T>? results;
 
   PagedResponse({
     this.page,
@@ -23,7 +23,12 @@ class PagedResponse<T> extends Equatable {
     this.results,
   });
 
-  int get nextPage => page == totalPages ? null : page + 1;
+  int get nextPage {
+    if (page != null && page == totalPages) {
+      return page! + 1;
+    }
+    return 1;
+  }
 
   Map<String, dynamic> toJson() => _$PagedResponseToJson(this);
 
@@ -31,5 +36,5 @@ class PagedResponse<T> extends Equatable {
       _$PagedResponseFromJson(json);
 
   @override
-  List<Object> get props => [page, totalResults, totalPages, results];
+  List<Object?> get props => [page, totalResults, totalPages, results];
 }

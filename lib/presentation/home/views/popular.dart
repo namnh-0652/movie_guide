@@ -1,15 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieguide/di.dart';
 import 'package:movieguide/domain/entities/movie_kind.dart';
 import 'package:movieguide/presentation/home/bloc/movielist/movielist_bloc.dart';
-import 'package:movieguide/presentation/home/views/subviews/bottom_loading.dart';
 import 'package:movieguide/presentation/home/views/subviews/movie_item.dart';
 
 class TabPopular extends StatelessWidget {
-  const TabPopular({Key key}) : super(key: key);
+  const TabPopular({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +26,7 @@ class PopularMovies extends StatefulWidget {
 
 class _PopularMoviesState extends State<PopularMovies> {
   final ScrollController _scrollController = ScrollController();
-  MovielistBloc _movielistBloc;
+  MovielistBloc? _movielistBloc;
   @override
   void initState() {
     super.initState();
@@ -40,7 +38,8 @@ class _PopularMoviesState extends State<PopularMovies> {
     double maxScroll = _scrollController.position.maxScrollExtent;
     double currentScroll = _scrollController.position.pixels;
     double delta = 200.0;
-    if (currentScroll >= maxScroll - delta && !_movielistBloc.isLoading) {
+    if (currentScroll >= maxScroll - delta &&
+        !(_movielistBloc?.isLoading ?? false)) {
       _movielistBloc?.fectchMovies(MovieKind.popular);
     }
   }
@@ -49,7 +48,7 @@ class _PopularMoviesState extends State<PopularMovies> {
   void dispose() {
     super.dispose();
     _scrollController.dispose();
-    _movielistBloc.close();
+    _movielistBloc?.close();
   }
 
   @override
@@ -59,35 +58,36 @@ class _PopularMoviesState extends State<PopularMovies> {
         if (state is MovielistInitial) {
           return Center(child: CircularProgressIndicator());
         } else if (state is MovielistError) {
-          SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-            showDialog(
-              context: context,
-              builder: (_) {
-                return AlertDialog(
-                    title: Text("Something wrongs !"),
-                    content: Text(state.errorMessage),
-                    actions: [
-                      FlatButton(
-                        child: Text("OK"),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ]);
-              },
-            );
-          });
+          // SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+          //   showDialog(
+          //     context: context,
+          //     builder: (_) {
+          //       return AlertDialog(
+          //           title: Text("Something wrongs !"),
+          //           content: Text(state.errorMessage),
+          //           actions: [
+          //             FlatButton(
+          //               child: Text("OK"),
+          //               onPressed: () {
+          //                 Navigator.of(context).pop();
+          //               },
+          //             ),
+          //           ]);
+          //     },
+          //   );
+          // });
           return Container();
         }
-        return _buildMovieList(context, state);
+        return _buildMovieList(context, state as MovielistLoaded);
       },
     );
   }
 
   Widget _buildMovieList(BuildContext context, MovielistLoaded state) {
     final movies = state.movies;
+    if (_movielistBloc == null) return Container();
     return RefreshIndicator(
-      onRefresh: () => _movielistBloc.refresh(MovieKind.popular),
+      onRefresh: () => _movielistBloc!.refresh(MovieKind.popular),
       child: CustomScrollView(
         controller: _scrollController,
         slivers: [
@@ -106,10 +106,18 @@ class _PopularMoviesState extends State<PopularMovies> {
             ),
           ),
           SliverToBoxAdapter(
-            child: state.hasReachedEnd ? SizedBox() : BottomLoading(),
+            child: state.hasReachedEnd ? SizedBox() : _bottomLoading(),
           )
         ],
       ),
+    );
+  }
+
+  Widget _bottomLoading() {
+    return Container(
+      child: CircularProgressIndicator(),
+      alignment: Alignment.center,
+      padding: EdgeInsets.symmetric(vertical: 15),
     );
   }
 }
