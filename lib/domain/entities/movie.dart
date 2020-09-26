@@ -1,12 +1,14 @@
-import 'package:movieguide/domain/entities/base_entity.dart';
+import 'package:equatable/equatable.dart';
 
-class Movie extends Entity {
-  int id;
-  String posterPath;
-  String title;
-  int voteCount;
-  double voteAverage;
-  String releaseDate;
+import 'base_entity.dart';
+
+class Movie extends Equatable implements Entity {
+  final int id;
+  final String posterPath;
+  final String title;
+  final int voteCount;
+  final double voteAverage;
+  final String releaseDate;
   Movie({
     this.id,
     this.posterPath,
@@ -15,4 +17,8 @@ class Movie extends Entity {
     this.voteAverage,
     this.releaseDate,
   });
+
+  @override
+  List<Object> get props =>
+      [id, posterPath, title, voteCount, voteAverage, releaseDate];
 }
