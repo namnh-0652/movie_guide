@@ -17,8 +17,9 @@ class MovielistLoaded extends MovielistState {
 
   MovielistLoaded copyWith({List<Movie> movies, bool hasReachedEnd}) {
     return MovielistLoaded(
-        movies: movies ?? this.movies,
-        hasReachedEnd: hasReachedEnd ?? this.hasReachedEnd);
+      movies: movies ?? this.movies,
+      hasReachedEnd: hasReachedEnd ?? this.hasReachedEnd,
+    );
   }
 
   @override

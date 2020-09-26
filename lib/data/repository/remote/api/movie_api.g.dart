@@ -84,4 +84,24 @@ class _MovieApi implements MovieApi {
     final value = PagedResponse<MovieData>.fromJson(_result.data);
     return value;
   }
+
+  @override
+  getMovieDetail(apiKey, movieId) async {
+    ArgumentError.checkNotNull(apiKey, 'apiKey');
+    ArgumentError.checkNotNull(movieId, 'movieId');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'api_key': apiKey};
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        '/movie/$movieId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = MovieDetailData.fromJson(_result.data);
+    return value;
+  }
 }

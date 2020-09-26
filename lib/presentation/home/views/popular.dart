@@ -7,6 +7,7 @@ import 'package:movieguide/di.dart';
 import 'package:movieguide/domain/entities/movie.dart';
 import 'package:movieguide/domain/entities/movie_kind.dart';
 import 'package:movieguide/presentation/home/bloc/movielist/movielist_bloc.dart';
+import 'package:movieguide/presentation/router.dart';
 import 'package:movieguide/shared/common_util.dart';
 
 class TabPopular extends StatelessWidget {
@@ -112,17 +113,31 @@ class _PopularMoviesState extends State<PopularMovies> {
   }
 
   Widget _buildMovieItem(BuildContext context, Movie movie) {
+    final moviePosterURL = ApiConfig.IMAGE_BASE_URL + movie.posterPath;
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed(
+          Router.detailRoute,
+          arguments: {
+            'title': movie.title,
+            'movieId': movie.id,
+            'heroImageURL': moviePosterURL,
+            'heroImageTag': '$moviePosterURL',
+          },
+        );
+      },
       child: Stack(
         alignment: AlignmentDirectional.topEnd,
         children: [
           ColorFiltered(
             colorFilter:
                 ColorFilter.mode(CommonUtil.randomColor(), BlendMode.srcOver),
-            child: CachedNetworkImage(
-              imageUrl: ApiConfig.IMAGE_BASE_URL + movie.posterPath,
-              fit: BoxFit.fill,
+            child: Hero(
+              tag: moviePosterURL,
+              child: CachedNetworkImage(
+                imageUrl: moviePosterURL,
+                fit: BoxFit.fill,
+              ),
             ),
           ),
         ],

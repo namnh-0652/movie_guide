@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:movieguide/presentation/detail/movie_detail_screen.dart';
 import 'package:movieguide/presentation/home/home_screen.dart';
 import 'package:movieguide/presentation/splash/splash_screen.dart';
 
 class Router {
   static const String splashRoute = "/";
   static const String homeRoute = "/home";
+  static const String detailRoute = "/detail";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -13,6 +15,21 @@ class Router {
       case homeRoute:
         final title = settings.arguments;
         return MaterialPageRoute(builder: (_) => HomeScreen(title: title));
+      case detailRoute:
+        final args = settings.arguments as Map;
+        final title = args['title'];
+        final movieId = args['movieId'];
+        final heroImageURL = args['heroImageURL'];
+        final heroImageTag = args['heroImageTag'];
+
+        return MaterialPageRoute(
+          builder: (_) => MovieDetailScreen(
+            title: title,
+            movieId: movieId,
+            heroImageURL: heroImageURL,
+            heroImageTag: heroImageTag,
+          ),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
