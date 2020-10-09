@@ -27,13 +27,21 @@ class MovieDao {
   MovieDao({this.database}) : super();
 
   Future<int> insert(MovieData movie) async {
-    return database.insert(TABLE_NAME, movie.toJson());
+    return database.insert(
+      TABLE_NAME,
+      movie.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   Future<int> insertAll(List<MovieData> movies) async {
     final batch = database.batch();
     for (MovieData movie in movies) {
-      batch.insert(TABLE_NAME, movie.toJson());
+      batch.insert(
+        TABLE_NAME,
+        movie.toJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
     }
     final result = await batch.commit();
     return result.length;
@@ -45,6 +53,7 @@ class MovieDao {
       movie.toJson(),
       where: "${COLUMN_NAMES[0]} = ?",
       whereArgs: [movie.id],
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 

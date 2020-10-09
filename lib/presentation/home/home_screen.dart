@@ -25,11 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: IndexedStack(
-            children: tabs,
-            index: _currentIndex,
-          ),
+        body: IndexedStack(
+          children: tabs,
+          index: _currentIndex,
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
