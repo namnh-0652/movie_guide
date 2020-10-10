@@ -1,13 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movieguide/data/repository/remote/api/api_config.dart';
 import 'package:movieguide/di.dart';
-import 'package:movieguide/domain/entities/movie.dart';
 import 'package:movieguide/domain/entities/movie_kind.dart';
 import 'package:movieguide/presentation/home/bloc/movielist/movielist_bloc.dart';
-import 'package:movieguide/shared/common_util.dart';
+import 'package:movieguide/presentation/home/views/subviews/bottom_loading.dart';
+import 'package:movieguide/presentation/home/views/subviews/movie_item.dart';
 
 class TabPopular extends StatelessWidget {
   const TabPopular({Key key}) : super(key: key);
@@ -60,14 +59,24 @@ class _PopularMoviesState extends State<PopularMovies> {
         if (state is MovielistInitial) {
           return Center(child: CircularProgressIndicator());
         } else if (state is MovielistError) {
-          showDialog(
-            context: context,
-            builder: (_) {
-              return AlertDialog(
-                content: Text(state.errorMessage),
-              );
-            },
-          );
+          SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+            showDialog(
+              context: context,
+              builder: (_) {
+                return AlertDialog(
+                    title: Text("Something wrongs !"),
+                    content: Text(state.errorMessage),
+                    actions: [
+                      FlatButton(
+                        child: Text("OK"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ]);
+              },
+            );
+          });
           return Container();
         }
         return _buildMovieList(context, state);
@@ -85,46 +94,20 @@ class _PopularMoviesState extends State<PopularMovies> {
           SliverGrid(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                return _buildMovieItem(context, movies[index]);
+                return MovieItem(movie: movies[index]);
               },
               childCount: movies.length,
             ),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               childAspectRatio: 9 / 13,
               crossAxisCount: 2,
-              crossAxisSpacing: 5,
-              mainAxisSpacing: 5,
+              crossAxisSpacing: 2,
+              mainAxisSpacing: 2,
             ),
           ),
           SliverToBoxAdapter(
-              child: state.hasReachedEnd ? SizedBox() : _bottomLoading())
-        ],
-      ),
-    );
-  }
-
-  Widget _bottomLoading() {
-    return Container(
-      child: CircularProgressIndicator(),
-      alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(vertical: 15),
-    );
-  }
-
-  Widget _buildMovieItem(BuildContext context, Movie movie) {
-    return InkWell(
-      onTap: () {},
-      child: Stack(
-        alignment: AlignmentDirectional.topEnd,
-        children: [
-          ColorFiltered(
-            colorFilter:
-                ColorFilter.mode(CommonUtil.randomColor(), BlendMode.srcOver),
-            child: CachedNetworkImage(
-              imageUrl: ApiConfig.IMAGE_BASE_URL + movie.posterPath,
-              fit: BoxFit.fill,
-            ),
-          ),
+            child: state.hasReachedEnd ? SizedBox() : BottomLoading(),
+          )
         ],
       ),
     );

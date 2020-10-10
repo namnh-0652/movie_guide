@@ -5,6 +5,7 @@ import 'package:movieguide/data/model/mapper/movie_data_mapper.dart';
 import 'package:movieguide/data/model/movie_data.dart';
 import 'package:movieguide/data/repository/local/movie_local_datasource.dart';
 import 'package:movieguide/data/repository/remote/movie_remote_datasource.dart';
+import 'package:movieguide/data/repository/remote/response/paged_response.dart';
 import 'package:movieguide/domain/entities/movie.dart';
 import 'package:movieguide/domain/entities/movie_kind.dart';
 import 'package:movieguide/domain/error/failure.dart';
@@ -26,12 +27,11 @@ class MovieRepositoryImpl extends MovieRepository {
   @override
   Future<Either<Failure, Tuple2<List<Movie>, int>>> getMovies(
       String apiKey, int page, MovieKind kind) async {
-    // TODO: if kind = favorites, just demo with local datasource
     bool isNetworkConnected = await networkInfo.isConnected;
     if (!isNetworkConnected) {
       return Left(NetworkFailure());
     }
-    Tuple2<List<MovieData>, int> response;
+    PagedResponse<MovieData> response;
     switch (kind) {
       case MovieKind.popular:
         response = await remoteDataSource.popularMovies(apiKey, page);
@@ -43,9 +43,10 @@ class MovieRepositoryImpl extends MovieRepository {
       default:
         response = await remoteDataSource.latestMovies(apiKey, page);
     }
+
     final result =
-        response.value1.map((e) => movieDataMapper.mapToDomain(e)).toList();
-    return Right(Tuple2(result, response.value2));
+        response.results.map((e) => movieDataMapper.mapToDomain(e)).toList();
+    return Right(Tuple2(result, response.nextPage));
   }
 
   @override
@@ -65,5 +66,16 @@ class MovieRepositoryImpl extends MovieRepository {
       return Left(CacheFailue());
     }
     return Right(true);
+  }
+
+  @override
+  Future<Either<Failure, List<Movie>>> loadFavoriteMovies() async {
+    try {
+      final movies = await localDataSource.loadFavoriteMovies();
+      final result = movies.map((e) => movieDataMapper.mapToDomain(e)).toList();
+      return Right(result);
+    } catch (e) {
+      return Left(CacheFailue());
+    }
   }
 }
