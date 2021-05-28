@@ -14,6 +14,13 @@ class _TabFavoriteState extends State<TabFavorite> {
   final ScrollController _scrollController = ScrollController();
 
   @override
+  void initState() {
+    super.initState();
+    Provider.of<FavoriteMovieChangeNotifier>(context, listen: false)
+        .loadFavoriteMovies();
+  }
+
+  @override
   void dispose() {
     super.dispose();
     _scrollController.dispose();

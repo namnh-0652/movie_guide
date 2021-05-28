@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movieguide/presentation/home/home_screen.dart';
 import 'package:movieguide/presentation/splash/splash_screen.dart';
 
-class Router {
+class Routers {
   static const String splashRoute = "/";
   static const String homeRoute = "/home";
 

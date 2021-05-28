@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:movieguide/data/repository/remote/api/api_config.dart';
 import 'package:movieguide/domain/entities/movie.dart';
 import 'package:movieguide/domain/entities/movie_kind.dart';
 import 'package:movieguide/domain/error/failure.dart';
@@ -16,7 +17,7 @@ class GetMovieUseCase
   @override
   Future<Either<Failure, Tuple2<List<Movie>, int>>> call(
       GetMovieUseCaseParams params) async {
-    return await repository.getMovies(params.apiKey, params.page, params.kind);
+    return repository.getMovies(params.apiKey, params.page, params.kind);
   }
 }
 
@@ -26,8 +27,8 @@ class GetMovieUseCaseParams extends Equatable {
   final MovieKind kind;
 
   GetMovieUseCaseParams({
-    @required this.apiKey,
-    @required this.page,
+    this.apiKey = ApiConfig.API_KEY,
+    this.page = 1,
     @required this.kind,
   });
 
