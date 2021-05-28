@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   _startTimer(BuildContext context) async {
     return Timer(Duration(seconds: 1), () {
       Navigator.of(context)
-          .pushReplacementNamed(Router.homeRoute, arguments: "Home");
+          .pushReplacementNamed(Routers.homeRoute, arguments: "Home");
     });
   }
 

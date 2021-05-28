@@ -12,7 +12,9 @@ import 'package:movieguide/data/repository/remote/api/service_generator.dart';
 import 'package:movieguide/data/repository/remote/movie_remote_datasource.dart';
 import 'package:movieguide/domain/usecases/add_movie_to_favorite_usecase.dart';
 import 'package:movieguide/domain/usecases/get_movies_usecase.dart';
+import 'package:movieguide/domain/usecases/load_favorite_movie_usecase.dart';
 import 'package:movieguide/domain/usecases/remove_movie_from_favorite.dart';
+import 'core/platform/network_info_impl.dart';
 import 'domain/repository/movie_repository.dart';
 
 final getIt = GetIt.instance;
@@ -27,7 +29,8 @@ Future<void> setupDi() async {
 _coreModule() {
   getIt.registerSingleton(DataConnectionChecker());
   getIt.registerSingleton<NetworkInfo>(
-      NetworkInfoImpl(getIt.get<DataConnectionChecker>()));
+    NetworkInfoImpl(getIt.get<DataConnectionChecker>()),
+  );
 }
 
 _networkModule() {
@@ -51,7 +54,12 @@ _repositoryModule() {
 _usecaseModule() {
   getIt.registerFactory(() => GetMovieUseCase(repository: getIt.get()));
   getIt.registerFactory(
-      () => AddMovieToFavoriteUseCase(repository: getIt.get()));
+    () => AddMovieToFavoriteUseCase(repository: getIt.get()),
+  );
   getIt.registerFactory(
-      () => RemoveMovieFromFavoriteUseCase(repository: getIt.get()));
+    () => RemoveMovieFromFavoriteUseCase(repository: getIt.get()),
+  );
+  getIt.registerFactory(
+    () => LoadFavoriteMoviesUseCase(repository: getIt.get()),
+  );
 }

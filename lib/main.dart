@@ -18,14 +18,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => FavoriteMovieChangeNotifier(),
+      create: (context) => FavoriteMovieChangeNotifier(
+        addMovieToFavoriteUseCase: getIt.get(),
+        removeMovieFromFavoriteUseCase: getIt.get(),
+        favoriteMoviesUseCase: getIt.get(),
+      ),
       child: MaterialApp(
         title: 'Movie Guide',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        initialRoute: Router.splashRoute,
-        onGenerateRoute: Router.generateRoute,
+        initialRoute: Routers.splashRoute,
+        onGenerateRoute: Routers.generateRoute,
       ),
     );
   }
