@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movieguide/presentation/home/provider/favorite_movie_notifier.dart';
-import 'package:movieguide/presentation/router.dart';
+import 'package:movieguide/presentation/routers.dart';
 import 'package:provider/provider.dart';
 
 import 'data/repository/local/api/db/app_database.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        initialRoute: Routers.splashRoute,
+        initialRoute: Routers.homeRoute,
         onGenerateRoute: Routers.generateRoute,
       ),
     );
