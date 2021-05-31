@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:movieguide/data/repository/remote/api/api_config.dart';
 import 'package:movieguide/domain/entities/movie.dart';
 import 'package:movieguide/domain/entities/movie_kind.dart';
@@ -18,10 +17,10 @@ const String UNEXPECTED_ERROR = "Unexpected Error";
 
 class MovielistBloc extends Bloc<MovielistEvent, MovielistState> {
   final GetMovieUseCase getMovieUseCase;
-  int _nextPage = 1;
+  int? _nextPage = 1;
   bool _isLoading = false;
 
-  MovielistBloc({@required this.getMovieUseCase}) : super(MovielistInitial());
+  MovielistBloc({required this.getMovieUseCase}) : super(MovielistInitial());
 
   @override
   void onTransition(Transition<MovielistEvent, MovielistState> transition) {
@@ -37,7 +36,7 @@ class MovielistBloc extends Bloc<MovielistEvent, MovielistState> {
     if (event is LoadNextMoviePageEvent && !_hasReachedEnd(currentState)) {
       _isLoading = true;
       final eitherMovies = await getMovieUseCase(GetMovieUseCaseParams(
-          apiKey: ApiConfig.API_KEY, page: _nextPage, kind: event.kind));
+          apiKey: ApiConfig.API_KEY, page: _nextPage ?? 1, kind: event.kind));
       yield eitherMovies.fold(
         (failure) => MovielistError(errorMessage: _mapValueToString(failure)),
         (data) {

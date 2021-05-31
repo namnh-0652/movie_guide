@@ -4,7 +4,7 @@ class ServiceGenerator {
   static const int CONNECT_TIMEOUT = 30000;
   static const int RECEIVE_TIMEOUT = 30000;
 
-  static Dio generate(String baseUrl, List<Interceptor> inteceptors) {
+  static Dio generate(String baseUrl, List<Interceptor>? inteceptors) {
     final dio = Dio();
     dio.options
       ..baseUrl = baseUrl

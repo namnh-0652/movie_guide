@@ -4,9 +4,9 @@ part 'base_error.g.dart';
 @JsonSerializable()
 class BaseError {
   @JsonKey(name: 'status_code')
-  int code;
+  int? code;
   @JsonKey(name: 'status_name')
-  String message;
+  String? message;
 
   BaseError({
     this.code,

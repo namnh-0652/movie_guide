@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:movieguide/core/platform/network_info.dart';
 import 'package:movieguide/data/model/mapper/movie_data_mapper.dart';
+import 'package:movieguide/data/model/mapper/movie_detail_mapper.dart';
 import 'package:movieguide/data/model/movie_data.dart';
 import 'package:movieguide/data/repository/local/movie_local_datasource.dart';
 import 'package:movieguide/data/repository/remote/movie_remote_datasource.dart';
 import 'package:movieguide/data/repository/remote/response/paged_response.dart';
 import 'package:movieguide/domain/entities/movie.dart';
+import 'package:movieguide/domain/entities/movie_detail.dart';
 import 'package:movieguide/domain/entities/movie_kind.dart';
 import 'package:movieguide/domain/error/failure.dart';
 import 'package:movieguide/domain/repository/movie_repository.dart';
@@ -16,12 +17,14 @@ class MovieRepositoryImpl extends MovieRepository {
   final MovieLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
   final MovieDataMaper movieDataMapper;
+  final MovieDetailMapper movieDetailMapper;
 
   MovieRepositoryImpl({
-    @required this.remoteDataSource,
-    @required this.localDataSource,
-    @required this.networkInfo,
-    @required this.movieDataMapper,
+    required this.remoteDataSource,
+    required this.localDataSource,
+    required this.networkInfo,
+    required this.movieDataMapper,
+    required this.movieDetailMapper,
   });
 
   @override
@@ -45,7 +48,10 @@ class MovieRepositoryImpl extends MovieRepository {
     }
 
     final result =
-        response.results.map((e) => movieDataMapper.mapToDomain(e)).toList();
+        response.results?.map((e) => movieDataMapper.mapToDomain(e)).toList();
+    if (result == null) {
+      return Left(ServerFailure());
+    }
     return Right(Tuple2(result, response.nextPage));
   }
 
@@ -77,5 +83,14 @@ class MovieRepositoryImpl extends MovieRepository {
     } catch (e) {
       return Left(CacheFailue());
     }
+  }
+
+  Future<Either<Failure, MovieDetail>> getMovieDetail(
+    String apiKey,
+    int movieId,
+  ) async {
+    final movieDetail = await remoteDataSource.getMovieDetail(apiKey, movieId);
+
+    return Right(movieDetailMapper.mapToDomain(movieDetail));
   }
 }

@@ -4,7 +4,7 @@ import 'package:movieguide/presentation/home/views/subviews/movie_item.dart';
 import 'package:provider/provider.dart';
 
 class TabFavorite extends StatefulWidget {
-  const TabFavorite({Key key}) : super(key: key);
+  const TabFavorite({Key? key}) : super(key: key);
 
   @override
   _TabFavoriteState createState() => _TabFavoriteState();

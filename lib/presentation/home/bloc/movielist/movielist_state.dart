@@ -13,12 +13,13 @@ class MovielistLoaded extends MovielistState {
   final List<Movie> movies;
   final bool hasReachedEnd;
 
-  MovielistLoaded({@required this.movies, @required this.hasReachedEnd});
+  MovielistLoaded({required this.movies, required this.hasReachedEnd});
 
-  MovielistLoaded copyWith({List<Movie> movies, bool hasReachedEnd}) {
+  MovielistLoaded copyWith({List<Movie>? movies, bool? hasReachedEnd}) {
     return MovielistLoaded(
-        movies: movies ?? this.movies,
-        hasReachedEnd: hasReachedEnd ?? this.hasReachedEnd);
+      movies: movies ?? this.movies,
+      hasReachedEnd: hasReachedEnd ?? this.hasReachedEnd,
+    );
   }
 
   @override
@@ -26,10 +27,11 @@ class MovielistLoaded extends MovielistState {
 }
 
 class MovielistError extends MovielistState {
-  final String errorMessage;
+  final String? errorMessage;
 
   MovielistError({this.errorMessage});
 
   @override
-  List<Object> get props => [errorMessage, ...super.props];
+  List<Object> get props =>
+      errorMessage == null ? [super.props] : [errorMessage!, ...super.props];
 }

@@ -24,7 +24,7 @@ class MovieDao {
 
   final Database database;
 
-  MovieDao({this.database}) : super();
+  MovieDao({required this.database}) : super();
 
   Future<int> insert(MovieData movie) async {
     return database.insert(
