@@ -7,13 +7,13 @@ import 'package:movieguide/domain/repository/movie_repository.dart';
 import 'package:movieguide/domain/usecases/base_usecase.dart';
 
 class GetMovieUseCase
-    extends BaseUseCase<Tuple2<List<Movie>, int>, GetMovieUseCaseParams> {
+    extends BaseUseCase<Tuple2<List<Movie>, int?>, GetMovieUseCaseParams> {
   final MovieRepository repository;
 
   GetMovieUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, Tuple2<List<Movie>, int>>> call(
+  Future<Either<Failure, Tuple2<List<Movie>, int?>>> call(
       GetMovieUseCaseParams params) async {
     return repository.getMovies(params.apiKey, params.page, params.kind);
   }

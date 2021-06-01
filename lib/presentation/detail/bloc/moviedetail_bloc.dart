@@ -39,7 +39,7 @@ class MoviedetailBloc extends Bloc<MoviedetailEvent, MoviedetailState> {
         return NETWORK_ERROR;
       case ServerFailure:
         return SERVER_ERROR;
-      case CacheFailue:
+      case CacheFailure:
       default:
         return UNEXPECTED_ERROR;
     }

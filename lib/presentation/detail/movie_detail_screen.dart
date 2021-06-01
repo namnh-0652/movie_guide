@@ -72,29 +72,25 @@ class MovieDetailScreen extends StatelessWidget {
                 Text("Can not get detail! \n Cause by ${state.errorMessage}"),
           );
         } else {
-          final detail = (state as MoviedetailLoaded).movieDetail;
-          if (detail == null) return Container();
+          final movie = (state as MoviedetailLoaded).movieDetail;
+          if (movie == null) return Container();
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 10),
               Text(
-                detail.title ?? "",
-                style: TextStyle(
-                  fontSize: 28.0,
-                ),
+                movie.title ?? "",
+                style: TextStyle(fontSize: 28.0),
               ),
               SizedBox(height: 10),
               Text(
-                "Release Date: ${detail.releaseDate}",
-                style: TextStyle(
-                  fontSize: 16.0,
-                ),
+                "Release Date: ${movie.releaseDate}",
+                style: TextStyle(fontSize: 16.0),
               ),
               SizedBox(height: 4),
               Text(
-                "${detail.voteAverage ?? 0} / 10",
+                "${movie.voteAverage ?? 0} / 10",
                 style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
@@ -109,7 +105,7 @@ class MovieDetailScreen extends StatelessWidget {
               ),
               SizedBox(height: 2),
               Text(
-                detail.overview ?? "",
+                movie.overview ?? "",
                 style: TextStyle(
                   fontSize: 16.0,
                 ),

@@ -28,7 +28,7 @@ class MovieRepositoryImpl extends MovieRepository {
   });
 
   @override
-  Future<Either<Failure, Tuple2<List<Movie>, int>>> getMovies(
+  Future<Either<Failure, Tuple2<List<Movie>, int?>>> getMovies(
       String apiKey, int page, MovieKind kind) async {
     bool isNetworkConnected = await networkInfo.isConnected;
     if (!isNetworkConnected) {
@@ -60,7 +60,7 @@ class MovieRepositoryImpl extends MovieRepository {
     final affectedRows = await localDataSource
         .addMovieToFavorite(movieDataMapper.mapToData(movie));
     if (affectedRows <= 0) {
-      return Left(CacheFailue());
+      return Left(CacheFailure());
     }
     return Right(true);
   }
@@ -69,7 +69,7 @@ class MovieRepositoryImpl extends MovieRepository {
   Future<Either<Failure, bool>> removeMovieFromFavorite(String movieId) async {
     final affectedRows = await localDataSource.removeMovieFromFavorite(movieId);
     if (affectedRows <= 0) {
-      return Left(CacheFailue());
+      return Left(CacheFailure());
     }
     return Right(true);
   }
@@ -81,7 +81,7 @@ class MovieRepositoryImpl extends MovieRepository {
       final result = movies.map((e) => movieDataMapper.mapToDomain(e)).toList();
       return Right(result);
     } catch (e) {
-      return Left(CacheFailue());
+      return Left(CacheFailure());
     }
   }
 
@@ -89,8 +89,11 @@ class MovieRepositoryImpl extends MovieRepository {
     String apiKey,
     int movieId,
   ) async {
+    bool isNetworkConnected = await networkInfo.isConnected;
+    if (!isNetworkConnected) {
+      return Left(NetworkFailure());
+    }
     final movieDetail = await remoteDataSource.getMovieDetail(apiKey, movieId);
-
     return Right(movieDetailMapper.mapToDomain(movieDetail));
   }
 }
