@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:movieguide/domain/entities/movie_detail.dart';
-import 'package:movieguide/domain/error/failure.dart';
+import 'package:movieguide/domain/error/error_entity.dart';
 import 'package:movieguide/domain/repository/movie_repository.dart';
 import 'package:movieguide/domain/usecases/base_usecase.dart';
 
@@ -12,7 +12,7 @@ class GetMovieDetailUseCase
   GetMovieDetailUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, MovieDetail>> call(
+  Future<Either<ErrorEntity, MovieDetail>> call(
       GetMovieDetailUseCaseParams params) async {
     return await repository.getMovieDetail(params.apiKey, params.movieId);
   }

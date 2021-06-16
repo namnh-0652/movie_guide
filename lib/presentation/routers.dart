@@ -9,8 +9,7 @@ class Routers {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case homeRoute:
-        final title = settings.arguments?.toString();
-        return MaterialPageRoute(builder: (_) => HomeScreen(title: title));
+        return MaterialPageRoute(builder: (_) => HomeScreen());
       case detailRoute:
         final args = settings.arguments as Map;
         final title = args['title'];

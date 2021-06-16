@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:movieguide/domain/entities/movie.dart';
 import 'package:movieguide/domain/entities/movie_kind.dart';
-import 'package:movieguide/domain/error/failure.dart';
+import 'package:movieguide/domain/error/error_entity.dart';
 import 'package:movieguide/domain/repository/movie_repository.dart';
 import 'package:movieguide/domain/usecases/base_usecase.dart';
 
@@ -13,7 +13,7 @@ class GetMovieUseCase
   GetMovieUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, Tuple2<List<Movie>, int?>>> call(
+  Future<Either<ErrorEntity, Tuple2<List<Movie>, int?>>> call(
       GetMovieUseCaseParams params) async {
     return repository.getMovies(params.apiKey, params.page, params.kind);
   }

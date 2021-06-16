@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:movieguide/domain/entities/movie.dart';
-import 'package:movieguide/domain/error/failure.dart';
+import 'package:movieguide/domain/error/error_entity.dart';
 import 'package:movieguide/domain/repository/movie_repository.dart';
 import 'package:movieguide/domain/usecases/base_usecase.dart';
 
@@ -12,7 +12,7 @@ class AddMovieToFavoriteUseCase
   AddMovieToFavoriteUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, bool>> call(AddMovieToFavoriteParams params) {
+  Future<Either<ErrorEntity, bool>> call(AddMovieToFavoriteParams params) {
     return repository.addMovieToFavorite(params.movie);
   }
 }

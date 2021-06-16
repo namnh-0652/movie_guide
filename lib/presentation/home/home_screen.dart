@@ -4,10 +4,7 @@ import 'package:movieguide/shared/constant.dart';
 import 'views/views.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key, this.title}) : super(key: key);
-
-  final String? title;
-
+  HomeScreen({Key? key}) : super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }

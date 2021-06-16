@@ -21,13 +21,11 @@ class MyApp extends StatelessWidget {
       create: (context) => FavoriteMovieChangeNotifier(
         addMovieToFavoriteUseCase: getIt.get(),
         removeMovieFromFavoriteUseCase: getIt.get(),
-        favoriteMoviesUseCase: getIt.get(),
+        loadFavoriteMoviesUseCase: getIt.get(),
       ),
       child: MaterialApp(
         title: 'Movie Guide',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: ThemeData(primarySwatch: Colors.blue),
         initialRoute: Routers.homeRoute,
         onGenerateRoute: Routers.generateRoute,
       ),

@@ -5,7 +5,7 @@ part 'base_error.g.dart';
 class BaseError {
   @JsonKey(name: 'status_code')
   int? code;
-  @JsonKey(name: 'status_name')
+  @JsonKey(name: 'status_message')
   String? message;
 
   BaseError({

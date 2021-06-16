@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:movieguide/data/repository/local/api/error/local_error.dart';
 import 'package:movieguide/data/repository/remote/api/api_config.dart';
+import 'package:movieguide/data/repository/remote/api/error/api_error.dart';
 import 'package:movieguide/domain/entities/movie_detail.dart';
-import 'package:movieguide/domain/error/failure.dart';
+import 'package:movieguide/domain/error/error_entity.dart';
 import 'package:movieguide/domain/usecases/get_movie_detail_usecase.dart';
 import 'package:movieguide/presentation/home/bloc/movielist/movielist_bloc.dart';
 
@@ -33,13 +35,13 @@ class MoviedetailBloc extends Bloc<MoviedetailEvent, MoviedetailState> {
         (data) => MoviedetailLoaded(movieDetail: data));
   }
 
-  String _mapValueToString(Failure failure) {
+  String _mapValueToString(ErrorEntity failure) {
     switch (failure.runtimeType) {
-      case NetworkFailure:
+      case NetworkError:
         return NETWORK_ERROR;
-      case ServerFailure:
+      case ServerError:
         return SERVER_ERROR;
-      case CacheFailure:
+      case DatabaseError:
       default:
         return UNEXPECTED_ERROR;
     }
