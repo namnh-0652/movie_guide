@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:movieguide/data/repository/local/api/error/local_error.dart';
 import 'package:movieguide/data/repository/remote/api/api_config.dart';
+import 'package:movieguide/data/repository/remote/api/error/api_error.dart';
 import 'package:movieguide/domain/entities/movie.dart';
 import 'package:movieguide/domain/entities/movie_kind.dart';
-import 'package:movieguide/domain/error/failure.dart';
+import 'package:movieguide/domain/error/error_entity.dart';
 import 'package:movieguide/domain/usecases/get_movies_usecase.dart';
 
 part 'movielist_event.dart';
@@ -46,7 +48,8 @@ class MovielistBloc extends Bloc<MovielistEvent, MovielistState> {
                 ? currentState.copyWith(hasReachedEnd: true)
                 : MovielistLoaded(
                     movies: currentState.movies + data.value1,
-                    hasReachedEnd: false);
+                    hasReachedEnd: false,
+                  );
           }
           return MovielistLoaded(movies: data.value1, hasReachedEnd: false);
         },
@@ -64,13 +67,13 @@ class MovielistBloc extends Bloc<MovielistEvent, MovielistState> {
 
   bool get isLoading => _isLoading;
 
-  String _mapValueToString(Failure failure) {
+  String _mapValueToString(ErrorEntity failure) {
     switch (failure.runtimeType) {
-      case NetworkFailure:
+      case NetworkError:
         return NETWORK_ERROR;
-      case ServerFailure:
+      case ServerError:
         return SERVER_ERROR;
-      case CacheFailure:
+      case DatabaseError:
       default:
         return UNEXPECTED_ERROR;
     }

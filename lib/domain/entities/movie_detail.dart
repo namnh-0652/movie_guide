@@ -50,29 +50,27 @@ class MovieDetail extends Equatable implements Entity {
   });
 
   @override
-  List<Object?> get props {
-    return [
-      adult,
-      backdropPath,
-      belongsToCollection,
-      budget,
-      homepage,
-      id,
-      imdbId,
-      originalLanguage,
-      originalTitle,
-      overview,
-      popularity,
-      posterPath,
-      releaseDate,
-      revenue,
-      runtime,
-      status,
-      tagline,
-      title,
-      video,
-      voteAverage,
-      voteCount,
-    ];
-  }
+  List<Object?> get props => [
+        adult,
+        backdropPath,
+        belongsToCollection,
+        budget,
+        homepage,
+        id,
+        imdbId,
+        originalLanguage,
+        originalTitle,
+        overview,
+        popularity,
+        posterPath,
+        releaseDate,
+        revenue,
+        runtime,
+        status,
+        tagline,
+        title,
+        video,
+        voteAverage,
+        voteCount,
+      ];
 }

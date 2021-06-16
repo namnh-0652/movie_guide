@@ -1,4 +1,5 @@
 import 'package:connectivity/connectivity.dart';
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:movieguide/core/platform/network_info.dart';
 import 'package:movieguide/data/model/mapper/movie_data_mapper.dart';
@@ -8,6 +9,7 @@ import 'package:movieguide/data/repository/local/api/db/impl/app_database_impl.d
 import 'package:movieguide/data/repository/local/movie_local_datasource.dart';
 import 'package:movieguide/data/repository/movie_repository_impl.dart';
 import 'package:movieguide/data/repository/remote/api/api_config.dart';
+import 'package:movieguide/data/repository/remote/api/middleware/connectivity_interceptor.dart';
 import 'package:movieguide/data/repository/remote/api/movie_api.dart';
 import 'package:movieguide/data/repository/remote/api/service_generator.dart';
 import 'package:movieguide/data/repository/remote/movie_remote_datasource.dart';
@@ -30,33 +32,44 @@ Future<void> setupDi() async {
 }
 
 _coreModule() {
-  getIt.registerSingleton(Connectivity());
-  getIt.registerSingleton<NetworkInfo>(
-    NetworkInfoImpl(getIt.get<Connectivity>()),
+  getIt.registerLazySingleton(() => Connectivity());
+  getIt.registerLazySingleton<NetworkInfo>(
+    () => NetworkInfoImpl(getIt.get<Connectivity>()),
   );
 }
 
 _networkModule() {
-  getIt.registerSingleton(ServiceGenerator.generate(ApiConfig.API_KEY, null));
-  getIt.registerSingleton(MovieApi(getIt.get()));
+  getIt.registerLazySingleton(
+    () => ServiceGenerator.generate(
+      ApiConfig.API_KEY,
+      inteceptors: [
+        ConnectivityInterceptor(networkInfo: getIt.get<NetworkInfo>()),
+        LogInterceptor()
+      ],
+    ),
+  );
+  getIt.registerLazySingleton(() => MovieApi(getIt.get()));
 }
 
 _mapperModule() {
-  getIt.registerSingleton(MovieDataMaper());
-  getIt.registerSingleton(MovieDetailMapper());
+  getIt.registerFactory(() => MovieDataMaper());
+  getIt.registerFactory(() => MovieDetailMapper());
 }
 
 _repositoryModule() {
-  getIt.registerSingleton<AppDatabase>(AppDataBaseImpl.instance);
-  getIt.registerSingleton(MovieRemoteDataSource(movieApi: getIt.get()));
-  getIt.registerSingleton(MovieLocalDataSource(getIt.get()));
-  getIt.registerSingleton<MovieRepository>(MovieRepositoryImpl(
-    remoteDataSource: getIt.get(),
-    localDataSource: getIt.get(),
-    networkInfo: getIt.get(),
-    movieDataMapper: getIt.get(),
-    movieDetailMapper: getIt.get(),
-  ));
+  getIt.registerLazySingleton<AppDatabase>(() => AppDataBaseImpl.instance);
+  getIt.registerLazySingleton(
+    () => MovieRemoteDataSource(movieApi: getIt.get()),
+  );
+  getIt.registerLazySingleton(() => MovieLocalDataSource(getIt.get()));
+  getIt.registerLazySingleton<MovieRepository>(
+    () => MovieRepositoryImpl(
+      remoteDataSource: getIt.get(),
+      localDataSource: getIt.get(),
+      movieDataMapper: getIt.get(),
+      movieDetailMapper: getIt.get(),
+    ),
+  );
 }
 
 _usecaseModule() {

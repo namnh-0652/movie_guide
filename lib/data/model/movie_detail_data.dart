@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:movieguide/data/model/data_model.dart';
@@ -5,37 +6,37 @@ import 'package:movieguide/data/model/data_model.dart';
 part 'movie_detail_data.g.dart';
 
 @JsonSerializable()
-class MovieDetailData extends DataModel {
-  bool? adult;
+class MovieDetailData extends Equatable implements DataModel {
+  final bool? adult;
   @JsonKey(name: "backdrop_path")
-  String? backdropPath;
+  final String? backdropPath;
   @JsonKey(name: "belongs_to_collection")
-  dynamic belongsToCollection;
-  int? budget;
-  String? homepage;
-  int? id;
+  final dynamic belongsToCollection;
+  final int? budget;
+  final String? homepage;
+  final int? id;
   @JsonKey(name: "imdb_id")
-  String? imdbId;
+  final String? imdbId;
   @JsonKey(name: "original_language")
-  String? originalLanguage;
+  final String? originalLanguage;
   @JsonKey(name: "original_title")
-  String? originalTitle;
-  String? overview;
-  double? popularity;
+  final String? originalTitle;
+  final String? overview;
+  final double? popularity;
   @JsonKey(name: "poster_path")
-  String? posterPath;
+  final String? posterPath;
   @JsonKey(name: "release_date")
-  String? releaseDate;
-  int? revenue;
-  int? runtime;
-  String? status;
-  String? tagline;
-  String? title;
-  bool? video;
+  final String? releaseDate;
+  final int? revenue;
+  final int? runtime;
+  final String? status;
+  final String? tagline;
+  final String? title;
+  final bool? video;
   @JsonKey(name: "vote_avarage")
-  double? voteAverage;
+  final double? voteAverage;
   @JsonKey(name: "vote_count")
-  int? voteCount;
+  final int? voteCount;
 
   MovieDetailData({
     this.adult,
@@ -64,4 +65,28 @@ class MovieDetailData extends DataModel {
       _$MovieDetailDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$MovieDetailDataToJson(this);
+  @override
+  List<Object?> get props => [
+        this.adult,
+        this.backdropPath,
+        this.belongsToCollection,
+        this.budget,
+        this.homepage,
+        this.id,
+        this.imdbId,
+        this.originalLanguage,
+        this.originalTitle,
+        this.overview,
+        this.popularity,
+        this.posterPath,
+        this.releaseDate,
+        this.revenue,
+        this.runtime,
+        this.status,
+        this.tagline,
+        this.title,
+        this.video,
+        this.voteAverage,
+        this.voteCount
+      ];
 }

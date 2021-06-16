@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movieguide/domain/error/failure.dart';
+import 'package:movieguide/domain/error/error_entity.dart';
 import 'package:movieguide/domain/repository/movie_repository.dart';
 import 'package:movieguide/domain/usecases/base_usecase.dart';
 
@@ -11,7 +11,7 @@ class RemoveMovieFromFavoriteUseCase
   RemoveMovieFromFavoriteUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, bool>> call(RemoveMovieFromFavoriteParams params) {
+  Future<Either<ErrorEntity, bool>> call(RemoveMovieFromFavoriteParams params) {
     return repository.removeMovieFromFavorite(params.movieId);
   }
 }

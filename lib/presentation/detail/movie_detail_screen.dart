@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieguide/presentation/detail/bloc/moviedetail_bloc.dart';
+import 'package:movieguide/shared/common_ext.dart';
 
 import '../../di.dart';
 
@@ -68,8 +69,7 @@ class MovieDetailScreen extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         } else if (state is MoviedetailError) {
           return Center(
-            child:
-                Text("Can not get detail! \n Cause by ${state.errorMessage}"),
+            child: Text("Can not get detail! \nCause by ${state.errorMessage}"),
           );
         } else {
           final movie = (state as MoviedetailLoaded).movieDetail;
@@ -80,7 +80,7 @@ class MovieDetailScreen extends StatelessWidget {
             children: [
               SizedBox(height: 10),
               Text(
-                movie.title ?? "",
+                movie.title.orEmpty(),
                 style: TextStyle(fontSize: 28.0),
               ),
               SizedBox(height: 10),
@@ -105,7 +105,7 @@ class MovieDetailScreen extends StatelessWidget {
               ),
               SizedBox(height: 2),
               Text(
-                movie.overview ?? "",
+                movie.overview.orEmpty(),
                 style: TextStyle(
                   fontSize: 16.0,
                 ),

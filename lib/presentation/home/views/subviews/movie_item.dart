@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:movieguide/data/repository/remote/api/api_config.dart';
 import 'package:movieguide/domain/entities/movie.dart';
 import 'package:movieguide/presentation/home/views/subviews/favorite_button.dart';
+import 'package:movieguide/shared/common_ext.dart';
 
 import '../../../routers.dart';
 
@@ -14,7 +15,8 @@ class MovieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final moviePosterURL = ApiConfig.IMAGE_BASE_URL + (movie.posterPath ?? "");
+    final moviePosterURL =
+        ApiConfig.IMAGE_BASE_URL + movie.posterPath.orEmpty();
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -26,7 +28,7 @@ class MovieItem extends StatelessWidget {
                 'title': movie.title,
                 'movieId': movie.id,
                 'heroImageURL': moviePosterURL,
-                'heroImageTag': '$moviePosterURL',
+                'heroImageTag': moviePosterURL,
               },
             );
           },

@@ -6,6 +6,7 @@ import 'package:movieguide/domain/entities/movie_kind.dart';
 import 'package:movieguide/presentation/home/bloc/movielist/movielist_bloc.dart';
 import 'package:movieguide/presentation/home/views/subviews/bottom_loading.dart';
 import 'package:movieguide/presentation/home/views/subviews/movie_item.dart';
+import 'package:movieguide/shared/common_ext.dart';
 
 class TabRated extends StatelessWidget {
   const TabRated({Key? key}) : super(key: key);
@@ -59,24 +60,10 @@ class _RatedMoviesState extends State<RatedMovies> {
         if (state is MovielistInitial) {
           return Center(child: CircularProgressIndicator());
         } else if (state is MovielistError) {
-          // SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-          //   showDialog(
-          //     context: context,
-          //     builder: (_) {
-          //       return AlertDialog(
-          //           title: Text("Something wrongs !"),
-          //           content: Text(state.errorMessage),
-          //           actions: [
-          //             FlatButton(
-          //               child: Text("OK"),
-          //               onPressed: () {
-          //                 Navigator.of(context).pop();
-          //               },
-          //             ),
-          //           ]);
-          //     },
-          //   );
-          // });
+          WidgetsBinding.instance?.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.errorMessage.orEmpty())));
+          });
           return Container();
         }
         return _buildMovieList(context, state as MovielistLoaded);

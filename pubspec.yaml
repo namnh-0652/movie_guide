@@ -28,6 +28,7 @@ dependencies:
   connectivity: ^3.0.6
   cupertino_icons: ^1.0.3
   dartz: ^0.10.0-nullsafety.2
+  dio: ^4.0.0
   equatable: ^2.0.2
   flutter_bloc: ^7.0.1
   get_it: ^7.1.3

@@ -8,11 +8,11 @@ import 'package:movieguide/presentation/base/base_model.dart';
 class FavoriteMovieChangeNotifier extends BaseModel {
   final AddMovieToFavoriteUseCase addMovieToFavoriteUseCase;
   final RemoveMovieFromFavoriteUseCase removeMovieFromFavoriteUseCase;
-  final LoadFavoriteMoviesUseCase favoriteMoviesUseCase;
+  final LoadFavoriteMoviesUseCase loadFavoriteMoviesUseCase;
   FavoriteMovieChangeNotifier({
     required this.addMovieToFavoriteUseCase,
     required this.removeMovieFromFavoriteUseCase,
-    required this.favoriteMoviesUseCase,
+    required this.loadFavoriteMoviesUseCase,
   });
 
   final List<Movie> _favoriteMovies = [];
@@ -48,7 +48,7 @@ class FavoriteMovieChangeNotifier extends BaseModel {
   }
 
   void loadFavoriteMovies() async {
-    final movies = await favoriteMoviesUseCase(NoParams());
+    final movies = await loadFavoriteMoviesUseCase(NoParams());
     movies.fold((l) {
       // TODO: Handle failure
       notifyListeners();

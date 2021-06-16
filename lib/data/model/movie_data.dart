@@ -1,19 +1,20 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:movieguide/data/model/data_model.dart';
 part 'movie_data.g.dart';
 
 @JsonSerializable()
-class MovieData implements DataModel {
-  int? id;
-  String? title;
+class MovieData extends Equatable implements DataModel {
+  final int? id;
+  final String? title;
   @JsonKey(name: "vote_count")
-  int? voteCount;
+  final int? voteCount;
   @JsonKey(name: "poster_path")
-  String? posterPath;
+  final String? posterPath;
   @JsonKey(name: "vote_average")
-  double? voteAverage;
+  final double? voteAverage;
   @JsonKey(name: "release_date")
-  String? releaseDate;
+  final String? releaseDate;
 
   MovieData({
     this.id,
@@ -28,4 +29,8 @@ class MovieData implements DataModel {
       _$MovieDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$MovieDataToJson(this);
+
+  @override
+  List<Object?> get props =>
+      [id, title, voteCount, posterPath, voteAverage, releaseDate];
 }
