@@ -9,12 +9,12 @@ class GetMovieDetailUseCase
     extends BaseUseCase<MovieDetail, GetMovieDetailUseCaseParams> {
   final MovieRepository repository;
 
-  GetMovieDetailUseCase({required this.repository});
+  GetMovieDetailUseCase(this.repository);
 
   @override
   Future<Either<ErrorEntity, MovieDetail>> call(
-      GetMovieDetailUseCaseParams params) async {
-    return await repository.getMovieDetail(params.apiKey, params.movieId);
+      GetMovieDetailUseCaseParams params) {
+    return repository.getMovieDetail(params.apiKey, params.movieId);
   }
 }
 

@@ -9,7 +9,7 @@ class AddMovieToFavoriteUseCase
     extends BaseUseCase<bool, AddMovieToFavoriteParams> {
   final MovieRepository repository;
 
-  AddMovieToFavoriteUseCase({required this.repository});
+  AddMovieToFavoriteUseCase(this.repository);
 
   @override
   Future<Either<ErrorEntity, bool>> call(AddMovieToFavoriteParams params) {

@@ -7,8 +7,7 @@ class DataConverter<T> implements JsonConverter<T, Object> {
   @override
   T fromJson(Object json) {
     if (json is Map<String, dynamic>) {
-      if (json.containsKey('release_date') &&
-          json.containsKey('vote_average')) {
+      if (json.containsKey('title') && json.containsKey('vote_average')) {
         return MovieData.fromJson(json) as T;
       }
       // TODO: Add more cases here
@@ -16,7 +15,11 @@ class DataConverter<T> implements JsonConverter<T, Object> {
     //? This will only work if `json` is a native JSON type:
     //? num, String, bool, null, etc
     //? *and* is assignable to `T`.
-    return json as T;
+    try {
+      return json as T;
+    } catch (e) {
+      throw e;
+    }
   }
 
   @override

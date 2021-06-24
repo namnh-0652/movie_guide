@@ -1,34 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:movieguide/presentation/home/provider/favorite_movie_notifier.dart';
-import 'package:movieguide/presentation/routers.dart';
-import 'package:provider/provider.dart';
 
-import 'data/repository/local/api/db/app_database.dart';
-import 'di.dart';
+import 'package:get/get.dart';
+import 'package:movieguide/app_binding.dart';
+import 'package:movieguide/data/repository/local/api/db/app_database.dart';
+import 'package:movieguide/data/repository/local/api/db/impl/app_database_impl.dart';
+
+import 'presentation/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await setupDi();
-  await getIt.get<AppDatabase>().init();
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => FavoriteMovieChangeNotifier(
-        addMovieToFavoriteUseCase: getIt.get(),
-        removeMovieFromFavoriteUseCase: getIt.get(),
-        loadFavoriteMoviesUseCase: getIt.get(),
-      ),
-      child: MaterialApp(
-        title: 'Movie Guide',
-        theme: ThemeData(primarySwatch: Colors.blue),
-        initialRoute: Routers.homeRoute,
-        onGenerateRoute: Routers.generateRoute,
-      ),
-    );
-  }
+  // TODO: find the better way ???
+  await Get.put<AppDatabase>(AppDataBaseImpl.instance).init();
+  runApp(
+    GetMaterialApp(
+      initialRoute: AppPages.INITIAL,
+      getPages: AppPages.routes,
+      initialBinding: AppBinding(),
+    ),
+  );
 }

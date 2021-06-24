@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:movieguide/shared/constant.dart';
 
-import 'views/views.dart';
+import 'views/favorites/favorite.dart';
+import 'views/newest/newest.dart';
+import 'views/popular/popular.dart';
+import 'views/rated/rated.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);

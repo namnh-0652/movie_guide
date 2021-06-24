@@ -8,10 +8,10 @@ import 'base_usecase.dart';
 class LoadFavoriteMoviesUseCase extends BaseUseCase<List<Movie>, NoParams> {
   final MovieRepository repository;
 
-  LoadFavoriteMoviesUseCase({required this.repository});
+  LoadFavoriteMoviesUseCase(this.repository);
 
   @override
-  Future<Either<ErrorEntity, List<Movie>>> call(NoParams params) async {
+  Future<Either<ErrorEntity, List<Movie>>> call(NoParams params) {
     return repository.loadFavoriteMovies();
   }
 }

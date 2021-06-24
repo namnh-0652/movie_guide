@@ -1,12 +1,13 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'base_error.g.dart';
 
 @JsonSerializable()
-class BaseError {
+class BaseError extends Equatable {
   @JsonKey(name: 'status_code')
-  int? code;
+  final int? code;
   @JsonKey(name: 'status_message')
-  String? message;
+  final String? message;
 
   BaseError({
     this.code,
@@ -17,4 +18,7 @@ class BaseError {
       _$BaseErrorFromJson(json);
 
   Map<String, dynamic> toJson() => _$BaseErrorToJson(this);
+
+  @override
+  List<Object?> get props => [code, message];
 }

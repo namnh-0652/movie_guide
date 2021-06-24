@@ -10,11 +10,11 @@ class GetMovieUseCase
     extends BaseUseCase<Tuple2<List<Movie>, int?>, GetMovieUseCaseParams> {
   final MovieRepository repository;
 
-  GetMovieUseCase({required this.repository});
+  GetMovieUseCase(this.repository);
 
   @override
   Future<Either<ErrorEntity, Tuple2<List<Movie>, int?>>> call(
-      GetMovieUseCaseParams params) async {
+      GetMovieUseCaseParams params) {
     return repository.getMovies(params.apiKey, params.page, params.kind);
   }
 }

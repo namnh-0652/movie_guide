@@ -6,7 +6,7 @@ import 'api/remote_api_ext.dart';
 
 class MovieRemoteDataSource {
   final MovieApi movieApi;
-  MovieRemoteDataSource({required this.movieApi});
+  MovieRemoteDataSource(this.movieApi);
 
   Future<PagedResponse<MovieData>> popularMovies(String apiKey, int page) {
     return movieApi.execute((api) {

@@ -38,7 +38,7 @@ class AppDataBaseImpl implements AppDatabase {
   @override
   MovieDao movieDao() {
     assert(_database != null, "must init database first!");
-    _movieDao ??= MovieDao(database: _database!);
+    _movieDao ??= MovieDao(_database!);
     return _movieDao!;
   }
 

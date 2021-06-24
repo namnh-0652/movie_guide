@@ -8,7 +8,7 @@ class RemoveMovieFromFavoriteUseCase
     extends BaseUseCase<bool, RemoveMovieFromFavoriteParams> {
   final MovieRepository repository;
 
-  RemoveMovieFromFavoriteUseCase({required this.repository});
+  RemoveMovieFromFavoriteUseCase(this.repository);
 
   @override
   Future<Either<ErrorEntity, bool>> call(RemoveMovieFromFavoriteParams params) {

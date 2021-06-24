@@ -3,7 +3,7 @@ import 'package:movieguide/core/platform/network_info.dart';
 
 class ConnectivityInterceptor extends InterceptorsWrapper {
   final NetworkInfo networkInfo;
-  ConnectivityInterceptor({required this.networkInfo});
+  ConnectivityInterceptor(this.networkInfo);
 
   @override
   void onRequest(
